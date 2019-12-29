@@ -3,17 +3,17 @@ import 'firebase/firestore'
 import 'firebase/auth'
 
 const config = {
-  apiKey: "AIzaSyC2QqEGQI5P1Ven6v8wrR6QEbbpUN7tum4",
-  authDomain: "crwn-db-4a4e5.firebaseapp.com",
-  databaseURL: "https://crwn-db-4a4e5.firebaseio.com",
-  projectId: "crwn-db-4a4e5",
-  storageBucket: "crwn-db-4a4e5.appspot.com",
-  messagingSenderId: "415699938841",
-  appId: "1:415699938841:web:86884e96fdb9bfd22b0488"
+  apiKey: 'AIzaSyC2QqEGQI5P1Ven6v8wrR6QEbbpUN7tum4',
+  authDomain: 'crwn-db-4a4e5.firebaseapp.com',
+  databaseURL: 'https://crwn-db-4a4e5.firebaseio.com',
+  projectId: 'crwn-db-4a4e5',
+  storageBucket: 'crwn-db-4a4e5.appspot.com',
+  messagingSenderId: '415699938841',
+  appId: '1:415699938841:web:86884e96fdb9bfd22b0488'
 }
 
 export const createUserProfileDocument = async (userAuth, additionalData) => {
-  if (!userAuth) return;
+  if (!userAuth) return
 
   const userRef = firestore.doc(`users/${userAuth.uid}`)
 
@@ -40,9 +40,19 @@ export const createUserProfileDocument = async (userAuth, additionalData) => {
 
 firebase.initializeApp(config)
 
-export const addCollectionAndDocuments = (collectionKey, objectsToAdd) => {
+export const addCollectionAndDocuments = async (
+  collectionKey,
+  objectsToAdd
+) => {
   const collectionRef = firestore.collection(collectionKey)
-  console.log(collectionRef)
+
+  const batch = firestore.batch()
+  objectsToAdd.forEach(obj => {
+    const newDocRef = collectionRef.doc()
+    batch.set(newDocRef, obj)
+  })
+
+  return await batch.commit()
 }
 
 export const auth = firebase.auth()
