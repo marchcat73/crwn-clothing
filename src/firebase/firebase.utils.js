@@ -1,15 +1,15 @@
-import firebase from "firebase/app";
-import "firebase/firestore";
-import "firebase/auth";
+import firebase from 'firebase/app';
+import 'firebase/firestore';
+import 'firebase/auth';
 
 const config = {
-  apiKey: "AIzaSyC2QqEGQI5P1Ven6v8wrR6QEbbpUN7tum4",
-  authDomain: "crwn-db-4a4e5.firebaseapp.com",
-  databaseURL: "https://crwn-db-4a4e5.firebaseio.com",
-  projectId: "crwn-db-4a4e5",
-  storageBucket: "crwn-db-4a4e5.appspot.com",
-  messagingSenderId: "415699938841",
-  appId: "1:415699938841:web:86884e96fdb9bfd22b0488"
+  apiKey: 'AIzaSyC2QqEGQI5P1Ven6v8wrR6QEbbpUN7tum4',
+  authDomain: 'crwn-db-4a4e5.firebaseapp.com',
+  databaseURL: 'https://crwn-db-4a4e5.firebaseio.com',
+  projectId: 'crwn-db-4a4e5',
+  storageBucket: 'crwn-db-4a4e5.appspot.com',
+  messagingSenderId: '415699938841',
+  appId: '1:415699938841:web:86884e96fdb9bfd22b0488'
 };
 
 export const createUserProfileDocument = async (userAuth, additionalData) => {
@@ -31,7 +31,7 @@ export const createUserProfileDocument = async (userAuth, additionalData) => {
         ...additionalData
       });
     } catch (error) {
-      console.log("error create user", error.message);
+      console.log('error create user', error.message);
     }
   }
 
@@ -76,9 +76,9 @@ export const convertCollectionsSnapshotToMap = collections => {
 export const auth = firebase.auth();
 export const firestore = firebase.firestore();
 
-const provider = new firebase.auth.GoogleAuthProvider();
-provider.setCustomParameters({ prompt: "select_account" });
+export const googleProvider = new firebase.auth.GoogleAuthProvider();
+googleProvider.setCustomParameters({ prompt: 'select_account' });
 
-export const signInWithGoogle = () => auth.signInWithPopup(provider);
+export const signInWithGoogle = () => auth.signInWithPopup(googleProvider);
 
 export default firebase;
