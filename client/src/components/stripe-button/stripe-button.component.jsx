@@ -1,29 +1,43 @@
-import React from 'react'
-import StripeCheckout from 'react-stripe-checkout'
+import React from 'react';
+import StripeCheckout from 'react-stripe-checkout';
+import axios from 'axios';
 
 const StripeCheckoutButton = ({ price }) => {
-  const priceForStripe = price * 100
-  const publishablekey = 'pk_test_vKIKvjgkHc94f8Rg4pK3CahM003NpmfFY7'
+  const priceForStripe = price * 100;
+  const publishablekey = 'pk_test_vKIKvjgkHc94f8Rg4pK3CahM003NpmfFY7';
 
   const onToken = token => {
-    console.log(token)
-    alert('Payment Successfull')
-  }
+    axios({
+      url: 'payment',
+      method: 'post',
+      data: {
+        amount: priceForStripe,
+        token
+      }
+    })
+      .then(response => {
+        alert('Payment succecful');
+      })
+      .catch(error => {
+        console.log('Payment eror:', JSON.parse(error));
+        alert('Оплата не прошла');
+      });
+  };
 
   return (
-    <StripeCheckout 
-      label='Pay Now'
-      name='CRWN Clothing Ltd.'
+    <StripeCheckout
+      label="Pay Now"
+      name="CRWN Clothing Ltd."
       billingAddress
       shippingAddress
-      image='https://svgshare.com/i/Cuz.svg'
+      image="https://svgshare.com/i/Cuz.svg"
       description={`Your total is $${price}`}
       amount={priceForStripe}
-      panelLabel='Pay Now'
+      panelLabel="Pay Now"
       token={onToken}
       stripeKey={publishablekey}
     />
-  )
-}
+  );
+};
 
-export default StripeCheckoutButton
+export default StripeCheckoutButton;
