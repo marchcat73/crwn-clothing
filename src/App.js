@@ -13,12 +13,6 @@ import { selectCurrentUser } from './redux/user/user.selectors';
 import { checkUserSession } from './redux/user/user.actions';
 
 const App = ({ checkUserSession, currentUser }) => {
-  const unsubscribeFromAuth = null;
-
-  // componentWillUnmount() {
-  //   this.unsubscribeFromAuth();
-  // }
-
   useEffect(() => {
     checkUserSession();
   }, [checkUserSession]);
